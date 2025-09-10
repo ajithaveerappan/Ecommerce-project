@@ -31,6 +31,7 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import { grey } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
+import { MobileNumberReducerActions } from "../EcommerceReducer/MobileNumberReducer";
 const UserLogin = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -130,6 +131,35 @@ const UserLogin = () => {
   //     dispatch(closeMenu());
   //   };
 
+  //Mobile number validation
+
+  const dispatch = useDispatch();
+  const mobileNumber = useSelector(
+    (state) => state.mobileNumberReducer.mobileNumber
+  );
+  const errorMessage = useSelector(
+    (state) => state.mobileNumberReducer.errorMessage
+  );
+  const validateMobile = (number) => {
+    const regex = /^[6-9]\d{9}$/;
+    return regex.test(number);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateMobile(mobileNumber)) {
+      dispatch(
+        MobileNumberReducerActions.setErrorMessage(
+          "Please enter a valid 10-digit mobile number"
+        )
+      );
+      return;
+    }
+
+    dispatch(MobileNumberReducerActions.setErrorMessage(""));
+
+    console.log("Logging in with mobile:", mobileNumber);
+  };
   return (
     <>
       <div className="Outercontainer">
@@ -323,6 +353,14 @@ const UserLogin = () => {
                   id="standard-basic"
                   label="Enter Email/Mobile number"
                   variant="standard"
+                  value={mobileNumber}
+                  onChange={(e) =>
+                    dispatch(
+                      MobileNumberReducerActions.updateMobileNumber(
+                        e.target.value
+                      )
+                    )
+                  }
                 />
               </Box>
               <div
@@ -350,6 +388,7 @@ const UserLogin = () => {
                   Privacy Policy.
                 </a>
               </div>
+              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
               <Stack spacing={2} direction="row">
                 <Box>
                   <Button
@@ -362,6 +401,7 @@ const UserLogin = () => {
                       fontSize: "14px",
                       marginTop: "20px",
                       borderRadius: 1,
+                      onClick: { handleSubmit },
                     }}
                   >
                     Request OTP
