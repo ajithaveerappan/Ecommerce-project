@@ -32,6 +32,8 @@ import TextField from "@mui/material/TextField";
 import { grey } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { MobileNumberReducerActions } from "../EcommerceReducer/MobileNumberReducer";
+import MobileNumberValidation from "../Ecommerce components/MobileNumberValidation";
+import OTPValidation from "../Ecommerce components/MobileNumberValidation";
 const UserLogin = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -74,92 +76,75 @@ const UserLogin = () => {
     },
   }));
   // for "more" options
-  //   const StyledMenu = styled((props) => (
-  //     <Menu
-  //       elevation={0}
-  //       anchorOrigin={{
-  //         vertical: "bottom",
-  //         horizontal: "right",
-  //       }}
-  //       transformOrigin={{
-  //         vertical: "top",
-  //         horizontal: "right",
-  //       }}
-  //       {...props}
-  //     />
-  //   ))(({ theme }) => ({
-  //     "& .MuiPaper-root": {
-  //       borderRadius: 6,
-  //       marginTop: theme.spacing(1),
-  //       minWidth: 180,
-  //       color: "rgb(55, 65, 81)",
-  //       boxShadow:
-  //         "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-  //       "& .MuiMenu-list": {
-  //         padding: "4px 0",
-  //       },
-  //       "& .MuiMenuItem-root": {
-  //         "& .MuiSvgIcon-root": {
-  //           fontSize: 18,
-  //           color: theme.palette.text.secondary,
-  //           marginRight: theme.spacing(1.5),
-  //           ...theme.applyStyles("dark", {
-  //             color: "inherit",
-  //           }),
-  //         },
-  //         "&:active": {
-  //           backgroundColor: alpha(
-  //             theme.palette.primary.main,
-  //             theme.palette.action.selectedOpacity
-  //           ),
-  //         },
-  //       },
-  //       ...theme.applyStyles("dark", {
-  //         color: theme.palette.grey[300],
-  //       }),
-  //     },
-  //   }));
-  //   const dispatch = useDispatch();
-  //   const anchorEl = useSelector((state) => state.moreOption.anchorEl);
+  const StyledMenu = styled((props) => (
+    <Menu
+      elevation={0}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    "& .MuiPaper-root": {
+      borderRadius: 6,
+      marginTop: theme.spacing(1),
+      minWidth: 180,
+      color: "rgb(55, 65, 81)",
+      boxShadow:
+        "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+      "& .MuiMenu-list": {
+        padding: "4px 0",
+      },
+      "& .MuiMenuItem-root": {
+        "& .MuiSvgIcon-root": {
+          fontSize: 18,
+          color: theme.palette.text.secondary,
+          marginRight: theme.spacing(1.5),
+          ...theme.applyStyles("dark", {
+            color: "inherit",
+          }),
+        },
+        "&:active": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            theme.palette.action.selectedOpacity
+          ),
+        },
+      },
+      ...theme.applyStyles("dark", {
+        color: theme.palette.grey[300],
+      }),
+    },
+  }));
+  const dispatch = useDispatch();
+  const anchorEl = useSelector((state) => state.moreOption.anchorEl);
 
-  //   const open = Boolean(anchorEl);
-  //   const handleClick = (event) => {
-  //     dispatch(openMenu(event.currentTarget));
-  //   };
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    dispatch(openMenu(event.currentTarget));
+  };
 
-  //   const handleClose = () => {
-  //     dispatch(closeMenu());
-  //   };
+  const handleClose = () => {
+    dispatch(closeMenu());
+  };
 
   //Mobile number validation
-
-  const dispatch = useDispatch();
+  const currentScreen = useSelector(
+    (state) => state.mobileNumberReducer.currentScreen
+  );
   const mobileNumber = useSelector(
     (state) => state.mobileNumberReducer.mobileNumber
   );
   const errorMessage = useSelector(
     (state) => state.mobileNumberReducer.errorMessage
   );
-  const validateMobile = (number) => {
-    const regex = /^[6-9]\d{9}$/;
-    return regex.test(number);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const otp = useSelector((state) => state.mobileNumberReducer.otp);
 
-    if (!validateMobile(mobileNumber)) {
-      dispatch(
-        MobileNumberReducerActions.setErrorMessage(
-          "Please enter a valid 10-digit mobile number"
-        )
-      );
-      return;
-    }
-
-    dispatch(MobileNumberReducerActions.setErrorMessage(""));
-
-    console.log("Logging in with mobile:", mobileNumber);
-  };
   return (
     <>
       <div className="Outercontainer">
@@ -216,7 +201,7 @@ const UserLogin = () => {
                   Become a Seller
                 </Typography>
                 {/* //Line of code for "More" option */}
-                {/* <Button
+                <Button
                   id="demo-customized-button"
                   aria-controls={open ? "demo-customized-menu" : undefined}
                   aria-haspopup="true"
@@ -258,7 +243,7 @@ const UserLogin = () => {
                     <GetAppIcon />
                     Download
                   </MenuItem>
-                </StyledMenu> */}
+                </StyledMenu>
                 <ShoppingCartIcon />
                 <Typography
                   variant="h6"
@@ -329,102 +314,9 @@ const UserLogin = () => {
               </Link>
             </Container>
           </div>
-          <div className="rightlogincontainer">
-            <Container
-              sx={{
-                height: "550px",
-                width: "550px",
-                backgroundColor: "#fff",
-
-                marginTop: 4,
-                padding: "56px 35px 16px",
-              }}
-            >
-              {/* Add your login form or content here */}
-              <Box
-                component="form"
-                sx={{
-                  "& > :not(style)": { m: 1, width: "55ch", marginTop: "10px" },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  id="standard-basic"
-                  label="Enter Email/Mobile number"
-                  variant="standard"
-                  value={mobileNumber}
-                  onChange={(e) =>
-                    dispatch(
-                      MobileNumberReducerActions.updateMobileNumber(
-                        e.target.value
-                      )
-                    )
-                  }
-                />
-              </Box>
-              <div
-                className="rightcontainercontent"
-                style={{
-                  marginTop: "30px",
-                  fontSize: "12px",
-                  fontWeight: 400,
-                  color: "#878787",
-                  marginLeft: "2px",
-                  fontFamily:
-                    "Inter, -apple-system, Helvetica, Arial, sans-serif",
-                }}
-              >
-                "By continuing ,you agree to Flipkart's"
-                <a className="termname" target="blank" href="/pages/terms">
-                  Terms of Use
-                </a>
-                "and"
-                <a
-                  className="policyname"
-                  target="blank"
-                  href="/pages/privacy Policy"
-                >
-                  Privacy Policy.
-                </a>
-              </div>
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <Stack spacing={2} direction="row">
-                <Box>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: "#fb641b",
-                      color: "#fff",
-                      width: "67vh",
-                      padding: "8px", // optional: makes the button taller
-                      fontSize: "14px",
-                      marginTop: "20px",
-                      borderRadius: 1,
-                      onClick: { handleSubmit },
-                    }}
-                  >
-                    Request OTP
-                  </Button>
-                </Box>
-              </Stack>
-              <Typography variant="body1">
-                <Box textAlign="center" width="50%">
-                  <Link
-                    to="/next-page"
-                    underline="hover"
-                    color="#2874f0"
-                    fontWeight={500}
-                    position="absolute"
-                    bottom="1006px"
-                    fontSize="15px"
-                  >
-                    New to Flipkart? Create an account
-                  </Link>
-                </Box>
-              </Typography>
-            </Container>
-          </div>
+          {/* <MobileNumberValidation></MobileNumberValidation> */}
+          {currentScreen === "login" && <MobileNumberValidation />}
+          {currentScreen === "otp" && <OTPValidation />}
         </Box>
       </div>
     </>

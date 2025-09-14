@@ -5,6 +5,8 @@ const MobileNumberReducer = createSlice({
   initialState: {
     mobileNumber: "",
     errorMessage: "",
+    otp: "",
+    currentScreen: "login",
   },
   reducers: {
     updateMobileNumber(state, action) {
@@ -12,6 +14,12 @@ const MobileNumberReducer = createSlice({
     },
     updateErrorMessage(state, action) {
       state.errorMessage = action.payload;
+    },
+    updateOTP(state, action) {
+      state.otp = action.payload;
+    },
+    updateCurrentScreen(state, action) {
+      state.currentScreen = action.payload;
     },
   },
 });
