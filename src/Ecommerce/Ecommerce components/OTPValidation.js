@@ -9,6 +9,7 @@ import { MobileNumberReducerActions } from "../EcommerceReducer/MobileNumberRedu
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const OTPValidation = () => {
   // Get values from Redux store
   const dispatch = useDispatch();
@@ -26,9 +27,11 @@ const OTPValidation = () => {
   };
 
   // Handle Verify button click
+  const navigate = useNavigate();
   const handleVerify = () => {
     if (otp === "123456") {
-      dispatch(MobileNumberReducerActions.updateCurrentScreen("home"));
+      // dispatch(MobileNumberReducerActions.updateCurrentScreen("login"));
+      navigate("/Home");
     } else {
       dispatch(MobileNumberReducerActions.updateErrorMessage("Invalid OTP"));
     }
@@ -41,21 +44,33 @@ const OTPValidation = () => {
           height: "550px",
           width: "550px",
           backgroundColor: "#fff",
-
-          marginTop: 4,
-          padding: "56px 35px 16px",
+          margintop: "31px",
+          padding: "76px 35px 16px",
+          display: "flex",
+          flexDirection: "column",
+          // justifyContent: "center",
+          // // alignItems: "center",
+          textAlign: "center",
         }}
       >
-        <Typography variant="h1" component="h2">
-          Please enter the OTP send to value{mobileNumber}.Change
+        <Typography component="h2" fontSize={15}>
+          Please enter the OTP send to <br></br> {mobileNumber}. Change
         </Typography>
-        <input
-          type="number"
-          maxLength="6"
-          placeholder="Enter OTP"
-          value={otp}
-          onChange={handleOtpChange}
-        />
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch", marginTop: "30px" },
+          }}
+        >
+          <TextField
+            id="standard-basic"
+            variant="standard"
+            marginTop="80px"
+            maxlength="4"
+            value={otp}
+            onChange={handleOtpChange}
+          />
+        </Box>
+        {/* <input type="number" maxLength="9" /> */}
         <Box>
           <Button
             variant="contained"
@@ -65,29 +80,26 @@ const OTPValidation = () => {
               width: "67vh",
               padding: "8px", // optional: makes the button taller
               fontSize: "14px",
-              marginTop: "20px",
+              marginTop: "50px",
               borderRadius: 1,
-              onClick: { handleVerify },
             }}
+            onClick={handleVerify}
           >
             Verify
           </Button>
         </Box>
-        <Typography variant="body1">
-          <Box textAlign="center" width="50%">
-            <Link
-              to="/next-page"
-              underline="hover"
-              color="#2874f0"
-              fontWeight={500}
-              position="absolute"
-              bottom="1006px"
-              fontSize="15px"
-            >
-              Not receive your code
-            </Link>
-          </Box>
-        </Typography>
+        <Box
+          sx={{
+            "& > :not(style)": { m: 1, width: "25ch", marginTop: "30px" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography fontSize={13} color="grey">
+            Not received your code?
+          </Typography>
+        </Box>
       </Container>
     </div>
   );

@@ -16,7 +16,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
+
 import Divider from "@mui/material/Divider";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -31,9 +31,12 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import { grey } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 import { MobileNumberReducerActions } from "../EcommerceReducer/MobileNumberReducer";
 import MobileNumberValidation from "../Ecommerce components/MobileNumberValidation";
-import OTPValidation from "../Ecommerce components/MobileNumberValidation";
+import OTPValidation from "./OTPValidation";
+
 const UserLogin = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -196,7 +199,7 @@ const UserLogin = () => {
                 <Typography
                   variant="h6"
                   component="div"
-                  sx={{ flexGrow: 1, ml: 5, fontSize: "16px" }}
+                  sx={{ flexGrow: 1, ml: 15, fontSize: "16px" }}
                 >
                   Become a Seller
                 </Typography>
@@ -211,39 +214,41 @@ const UserLogin = () => {
                   onClick={handleClick}
                   endIcon={<KeyboardArrowDownIcon />}
                 >
-                  Options
+                  More
                 </Button>
-                <StyledMenu
-                  id="demo-customized-menu"
-                  slotProps={{
-                    list: {
-                      "aria-labelledby": "demo-customized-button",
-                    },
-                  }}
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <EditIcon />
-                    Edit
-                  </MenuItem>
-                  <Divider sx={{ my: 0.5 }} />
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <FileCopyIcon />
-                    Duplicate
-                  </MenuItem>
-                  <Divider sx={{ my: 0.5 }} />
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <ArchiveIcon />
-                    Archive
-                  </MenuItem>
-                  <Divider sx={{ my: 0.5 }} />
-                  <MenuItem onClick={handleClose} disableRipple>
-                    <GetAppIcon />
-                    Download
-                  </MenuItem>
-                </StyledMenu>
+                <Box sx={{ ml: 10 }}>
+                  <StyledMenu
+                    id="demo-customized-menu"
+                    slotProps={{
+                      list: {
+                        "aria-labelledby": "demo-customized-button",
+                      },
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose} disableRipple>
+                      <NotificationsIcon />
+                      Notification Preferences
+                    </MenuItem>
+                    <Divider sx={{ my: 0.5 }} />
+                    <MenuItem onClick={handleClose} disableRipple>
+                      <HelpCenterIcon />
+                      24 *7 Customer care
+                    </MenuItem>
+                    <Divider sx={{ my: 0.5 }} />
+                    <MenuItem onClick={handleClose} disableRipple>
+                      <ShowChartIcon />
+                      Advertise
+                    </MenuItem>
+                    <Divider sx={{ my: 0.5 }} />
+                    <MenuItem onClick={handleClose} disableRipple>
+                      <GetAppIcon />
+                      Download App
+                    </MenuItem>
+                  </StyledMenu>
+                </Box>
                 <ShoppingCartIcon />
                 <Typography
                   variant="h6"
