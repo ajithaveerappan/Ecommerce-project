@@ -59,7 +59,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { OrderSummaryReducerActions } from "../EcommerceReducer/OrderSummaryReducer";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
+import StarRateIcon from "@mui/icons-material/StarRate";
 const LoginChange = () => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -270,7 +272,27 @@ const LoginChange = () => {
                 <Typography sx={{ fontSize: "14px", color: "#878787" }}>
                   Advantages of our secured login
                 </Typography>
-                <Typography>Easily track orders,Hassel free Returns</Typography>
+
+                <Typography
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <LocalShippingIcon sx={{ color: "#2874f0;" }} />
+                  Easily track orders,Hassel free Returns
+                </Typography>
+
+                <Typography
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <NotificationsIcon sx={{ color: "#2874f0;" }} />
+                  Get relevant alerts and recommendation
+                </Typography>
+
+                <Typography
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <StarRateIcon sx={{ color: "#2874f0;" }} />
+                  Whislist,Reviews,Ratings and more
+                </Typography>
               </Stack>
             </Stack>
 
