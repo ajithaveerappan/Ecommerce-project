@@ -59,6 +59,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { OrderSummaryReducerActions } from "../EcommerceReducer/OrderSummaryReducer";
+import LoginChange from "./LoginChange";
 
 const OrderSummary = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -248,18 +249,18 @@ const OrderSummary = () => {
           }}
         >
           {/* LEFT COLUMN */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              flex: 3,
-            }}
-          >
-            {/* Login Box */}
+          {currentLogin === true && <LoginChange />}
+          {currentLogin === false && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                flex: 3,
+              }}
+            >
+              {/* Login Box */}
 
-            {currentLogin === true && <p>hello</p>}
-            {currentLogin === false && (
               <Box
                 sx={{
                   backgroundColor: "#fff",
@@ -298,172 +299,186 @@ const OrderSummary = () => {
                       marginRight: "20px",
                     }}
                     onClick={() =>
-                      OrderSummaryReducerActions.updatecurrentLogin(true)
+                      dispatch(
+                        OrderSummaryReducerActions.updatecurrentLogin(true)
+                      )
                     }
                   >
                     Change
                   </Button>
                 </Stack>
               </Box>
-            )}
 
-            {/* Delivery Address Box */}
-            <Box
-              sx={{
-                backgroundColor: "#fff",
-                p: 1,
-                display: "flex",
-                flexDirection: "column",
+              {/* Delivery Address Box */}
+              <Box
+                sx={{
+                  backgroundColor: "#fff",
+                  p: 1,
+                  display: "flex",
+                  flexDirection: "column",
 
-                gap: 1,
-              }}
-            >
-              <Typography
-                sx={{ textTransform: "capitalize", color: "#878787" }}
+                  gap: 1,
+                }}
               >
-                Delivery Address
-              </Typography>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
+                <Typography
+                  sx={{ textTransform: "capitalize", color: "#878787" }}
+                >
+                  Delivery Address
+                </Typography>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Typography sx={{ fontSize: "14px" }}>
-                    123, ABC Street, Chennai, Tamil Nadu
-                  </Typography>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography sx={{ fontSize: "14px" }}>
+                      123, ABC Street, Chennai, Tamil Nadu
+                    </Typography>
+                  </Stack>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      textTransform: "uppercase",
+                      border: "1px solid #e0e0e0",
+                      color: "#2874f0",
+                      fontSize: "14px",
+                      backgroundColor: "#fff",
+                      fontWeight: "bold",
+                      marginBottom: "12px",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Change
+                  </Button>
                 </Stack>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    textTransform: "uppercase",
-                    border: "1px solid #e0e0e0",
-                    color: "#2874f0",
-                    fontSize: "14px",
-                    backgroundColor: "#fff",
-                    fontWeight: "bold",
-                    marginBottom: "12px",
-                    marginRight: "20px",
-                  }}
-                >
-                  Change
-                </Button>
-              </Stack>
-            </Box>
+              </Box>
 
-            {/* Order Summary Box */}
-            <Box
-              sx={{
-                backgroundColor: "#fff",
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                p: 2,
-              }}
-            >
-              <Typography
+              {/* Order Summary Box */}
+              <Box
                 sx={{
-                  backgroundColor: "#2874f0",
-                  color: "#fff",
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
                   p: 2,
-                  textTransform: "uppercase",
-                  fontWeight: 500,
                 }}
               >
-                Order Summary
-              </Typography>
+                <Typography
+                  sx={{
+                    backgroundColor: "#2874f0",
+                    color: "#fff",
+                    p: 2,
+                    textTransform: "uppercase",
+                    fontWeight: 500,
+                  }}
+                >
+                  Order Summary
+                </Typography>
 
-              {addToCartItems.length === 0 ? (
-                <Typography>Your cart is empty.</Typography>
-              ) : (
-                addToCartItems.map((item, index) => (
-                  <Card key={index} sx={{ display: "flex", gap: 2, p: 1 }}>
-                    <CardMedia
-                      component="img"
-                      sx={{ width: 100 }}
-                      image={maxi}
-                    />
-                    <Box
-                      sx={{ display: "flex", flexDirection: "column", flex: 1 }}
-                    >
-                      <Typography sx={{ fontSize: "18px", color: "#212121" }}>
-                        {item.productDiscription}
-                      </Typography>
-                      <Typography variant="h6" color="#878787" fontSize="17px">
-                        Seller:{item.productName}
-                      </Typography>
+                {addToCartItems.length === 0 ? (
+                  <Typography>Your cart is empty.</Typography>
+                ) : (
+                  addToCartItems.map((item, index) => (
+                    <Card key={index} sx={{ display: "flex", gap: 2, p: 1 }}>
+                      <CardMedia
+                        component="img"
+                        sx={{ width: 100 }}
+                        image={maxi}
+                      />
                       <Box
                         sx={{
                           display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                          mt: 1,
+                          flexDirection: "column",
+                          flex: 1,
                         }}
                       >
-                        <CurrencyRupeeIcon fontSize="small" />
-                        <Typography>{item.discountPrice}</Typography>
+                        <Typography sx={{ fontSize: "18px", color: "#212121" }}>
+                          {item.productDiscription}
+                        </Typography>
                         <Typography
-                          sx={{ textDecoration: "line-through", color: "gray" }}
+                          variant="h6"
+                          color="#878787"
+                          fontSize="17px"
                         >
-                          ₹{item.actualPrice}
+                          Seller:{item.productName}
                         </Typography>
-                        <Typography sx={{ color: "green", fontWeight: "bold" }}>
-                          {item.discountPercentage}% off
-                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            mt: 1,
+                          }}
+                        >
+                          <CurrencyRupeeIcon fontSize="small" />
+                          <Typography>{item.discountPrice}</Typography>
+                          <Typography
+                            sx={{
+                              textDecoration: "line-through",
+                              color: "gray",
+                            }}
+                          >
+                            ₹{item.actualPrice}
+                          </Typography>
+                          <Typography
+                            sx={{ color: "green", fontWeight: "bold" }}
+                          >
+                            {item.discountPercentage}% off
+                          </Typography>
+                        </Box>
+                        <Button
+                          sx={{
+                            mt: 1,
+                            textTransform: "uppercase",
+                            marginRight: "735px",
+                            color: "black",
+                            fontWeight: "bold",
+                            fontSize: "15px",
+                          }}
+                        >
+                          Remove
+                        </Button>
                       </Box>
-                      <Button
-                        sx={{
-                          mt: 1,
-                          textTransform: "uppercase",
-                          marginRight: "735px",
-                          color: "black",
-                          fontWeight: "bold",
-                          fontSize: "15px",
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </Box>
-                  </Card>
-                ))
-              )}
+                    </Card>
+                  ))
+                )}
 
-              {/* Bottom Confirmation */}
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                mt={2}
-              >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Typography>
-                    Order confirmation and email will be sent to
-                  </Typography>
-                  <TextField
-                    id="standard-basic"
-                    placeholder="Enter your emailID"
-                    variant="standard"
-                  />
-                </Box>
-
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#fb641b",
-                    color: "#fff",
-                    textTransform: "uppercase",
-                  }}
+                {/* Bottom Confirmation */}
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  mt={2}
                 >
-                  Continue
-                </Button>
-              </Stack>
-            </Box>
-          </Box>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography>
+                      Order confirmation and email will be sent to
+                    </Typography>
+                    <TextField
+                      id="standard-basic"
+                      placeholder="Enter your emailID"
+                      variant="standard"
+                    />
+                  </Box>
 
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#fb641b",
+                      color: "#fff",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Continue
+                  </Button>
+                </Stack>
+              </Box>
+            </Box>
+          )}
           {/* RIGHT COLUMN */}
           {/* <Box
             sx={{
@@ -539,7 +554,7 @@ const OrderSummary = () => {
             </Stack>
           </Box>
         </div>
-        <Box
+        {/* <Box
           display="flex"
           flexDirection="column"
           justifyContent="flex-start"
@@ -548,7 +563,7 @@ const OrderSummary = () => {
           mt={2}
         >
           <Typography>Safe and secure points</Typography>
-        </Box>
+        </Box> */}
       </div>
     </>
   );
