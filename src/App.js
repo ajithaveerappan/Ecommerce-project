@@ -19,19 +19,17 @@ function App() {
   // if (currentScreen === "login) return <MobileNumberValidation />;
   // if (currentScreen === "otp") return <OTPValidation />;
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<UserLogin />} />
-    //     <Route path="/home" element={<HomePage />} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<UserLogin />} />
+        <Route path="/home" element={<HomePage />} />
 
-    //     <Route path="/cart" element={<CheckOutPage />} />
+        <Route path="/cart" element={<CheckOutPage />} />
 
-    //     <Route path="/orderSummary" element={<OrderSummary />} />
-    //   </Routes>
-    // </Router>
-    <div>
-      <PaymentScreen></PaymentScreen>
-    </div>
+        <Route path="/orderSummary" element={<OrderSummary />} />
+        <Route path="/paymentscreen" element={<PaymentScreen />} />
+      </Routes>
+    </Router>
   );
 }
 

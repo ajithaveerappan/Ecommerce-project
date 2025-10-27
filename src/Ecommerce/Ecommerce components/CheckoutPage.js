@@ -171,6 +171,9 @@ const CheckOutPage = () => {
   const totalPrice =
     actualPriceValue - discountValue + platformFee - couponValue;
   console.log(totalPrice);
+  // price of the product
+  const priceOfTheProduct = actualPriceValue - discountValue - couponValue;
+  console.log(priceOfTheProduct);
   // for place order button ,if the card is empty the place border button is to be disbaled
   const isCartEmpty = addToCartItems.length === 0;
   //Line of code for place order button alert dialog
@@ -287,9 +290,9 @@ const CheckOutPage = () => {
             }}
           >
             <div style={{ padding: "2rem" }}>
-              <Typography variant="h4" gutterBottom>
+              {/* <Typography variant="h4" gutterBottom>
                 Your Cart is empty
-              </Typography>
+              </Typography> */}
 
               {/* If cart is empty */}
               {addToCartItems.lenghth === 0 ? (

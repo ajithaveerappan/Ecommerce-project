@@ -60,6 +60,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { OrderSummaryReducerActions } from "../EcommerceReducer/OrderSummaryReducer";
 import LoginChange from "./LoginChange";
+import { useNavigate } from "react-router-dom";
 
 const OrderSummary = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -196,6 +197,8 @@ const OrderSummary = () => {
   const currentLogin = useSelector(
     (state) => state.orderSummaryReducer.currentLogin
   );
+
+  const navigate = useNavigate();
   return (
     <>
       <div className="Outercontainer">
@@ -472,6 +475,7 @@ const OrderSummary = () => {
                       color: "#fff",
                       textTransform: "uppercase",
                     }}
+                    onClick={() => navigate("/paymentscreen")}
                   >
                     Continue
                   </Button>

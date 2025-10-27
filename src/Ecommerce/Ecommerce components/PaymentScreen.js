@@ -21,6 +21,13 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import EventIcon from "@mui/icons-material/Event";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import Button from "@mui/material/Button";
+
+import TextField from "@mui/material/TextField";
+import UPIPayment from "./UPIPayment";
+import CreditCardPayment from "./CreditCardPayment";
+import NetBankingPayment from "./NetBankingPayment";
+import { PaymentScreenReducerActions } from "../EcommerceReducer/PaymentScreenReducer";
 
 const PaymentScreen = () => {
   // Access the items added to cart from Redux store
@@ -48,6 +55,11 @@ const PaymentScreen = () => {
   console.log(totalPrice);
   // for place order button ,if the card is empty the place border button is to be disbaled
   const isCartEmpty = addToCartItems.length === 0;
+  //
+  const currentPaymentMethod = useSelector(
+    (state) => state.paymentScreen.currentPaymentMethod
+  );
+
   return (
     <>
       <div className="Outercontainer">
@@ -103,7 +115,14 @@ const PaymentScreen = () => {
               borderRadius: "12px solid grey",
             }}
           >
-            <Accordion>
+            <Accordion
+              expanded={currentPaymentMethod === "UPI"}
+              onChange={() =>
+                dispatch(
+                  PaymentScreenReducerActions.updateCurrentPaymentMethod("UPI")
+                )
+              }
+            >
               <AccordionSummary>
                 <Box display="flex" flexDirection="column">
                   <Typography
@@ -129,9 +148,29 @@ const PaymentScreen = () => {
                 </Box>
               </AccordionSummary>
 
-              <AccordionDetails></AccordionDetails>
+              <AccordionDetails>
+                {/* <Box display="flex" flexDirection="column" gap={2}>
+                  <Typography fontWeight={600}>Add new UPI ID</Typography>
+                  <TextField size="small" placeholder="Enter your UPI ID" />
+                  <Button variant="contained" sx={{ width: "100px" }}>
+                    Verify
+                  </Button>
+                  <Button variant="contained" sx={{ backgroundColor: "grey" }}>
+                    Pay ₹579
+                  </Button>
+                </Box> */}
+                <UPIPayment />
+              </AccordionDetails>
             </Accordion>
-            <Accordion>
+
+            <Accordion
+              expanded={currentPaymentMethod === "Card"}
+              onChange={() =>
+                dispatch(
+                  PaymentScreenReducerActions.updateCurrentPaymentMethod("Card")
+                )
+              }
+            >
               <AccordionSummary>
                 <Box display="flex" flexDirection="column" width="100%">
                   <Box display="flex" alignItems="center" mb={0.5}>
@@ -170,8 +209,20 @@ const PaymentScreen = () => {
                   </Typography>
                 </Box>
               </AccordionSummary>
+              <AccordionDetails>
+                <CreditCardPayment />
+              </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion
+              expanded={currentPaymentMethod === "NetBanking"}
+              onChange={() =>
+                dispatch(
+                  PaymentScreenReducerActions.updateCurrentPaymentMethod(
+                    "NetBanking"
+                  )
+                )
+              }
+            >
               <AccordionSummary sx={{ padding: 2 }}>
                 <Box display="flex" alignItems="center">
                   <AccountBalanceIcon sx={{ marginRight: 1 }} />
@@ -187,6 +238,9 @@ const PaymentScreen = () => {
                   </Typography>
                 </Box>
               </AccordionSummary>
+              <AccordionDetails>
+                <NetBankingPayment />
+              </AccordionDetails>
             </Accordion>
             <Accordion>
               <AccordionSummary sx={{ padding: 2 }}>

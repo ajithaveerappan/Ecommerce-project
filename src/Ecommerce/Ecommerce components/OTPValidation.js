@@ -30,7 +30,6 @@ const OTPValidation = () => {
   const navigate = useNavigate();
   const handleVerify = () => {
     if (otp === "123456") {
-      // dispatch(MobileNumberReducerActions.updateCurrentScreen("login"));
       navigate("/Home");
     } else {
       dispatch(MobileNumberReducerActions.updateErrorMessage("Invalid OTP"));
